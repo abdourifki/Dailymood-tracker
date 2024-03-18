@@ -2,7 +2,17 @@ import { useState } from "react"
 import ConfirmationMood from "./ConfirmationMood"
 
 export default function MoodTracker() {
+    const backgroundStyle = {
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(images/bg.jpg)`, // Utilisez le chemin relatif direct
+    };
+    
     const [mood, setMood] = useState("")
+    const [emoji, setEmoji] = useState("")
+
+    const moodTracker = (mood:string,emoji:string)=>{
+      setMood(mood)
+      setEmoji(emoji)
+    }
 
     const emojis = [
         {
@@ -17,8 +27,8 @@ export default function MoodTracker() {
         },
         {
             id: 3,
-            emoji: '../../images/bored.gif',
-            name: 'bored'
+            emoji: '../../images/overthinking.gif',
+            name: 'overthinking'
         },
         {
             id: 4,
@@ -27,30 +37,30 @@ export default function MoodTracker() {
         },
         {
             id: 5,
-            emoji: '../../images/sick.gif',
-            name: 'sick'
+            emoji: '../../images/crying.gif',
+            name: 'crying'
         },
         {
             id: 6,
-            emoji: '../../images/sleep.gif',
+            emoji: '../../images/sleepy.gif',
             name: 'sleep'
         }
     ]
     return (
-        <div className="flex justify-center items-center h-screen flex-col gap-y-16">
+        <div className=" flex justify-center items-center h-screen flex-col gap-y-16"  style={backgroundStyle} >
             {!mood ?
                 <>
-                    <h1 className="capitalize text-4xl font-semibold bg-gradient-to-r from-indigo-500 via-slate-500 to-cyan-500 bg-clip-text text-transparent">please could you pick your mood</h1>
-                    <div className="grid grid-cols-3 gap-16">
+                    <h1 className="capitalize text-5xl font-extrabold bg-gradient-to-r from-indigo-700 via-slate-500 to-red-500 bg-clip-text text-transparent ">please could you pick your mood</h1>
+                    <div className="grid grid-cols-3 gap-16 ">
                         {emojis.map((emoji) => (
-                            <button className="col-span-4 sm:col-span-1 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 p-3 rounded-md duration-300" key={emoji.id} onClick={() => setMood(emoji.name)}>
-                                <img src={emoji.emoji} alt={emoji.name} className="w-24 h-24" />
-                                <h2 className="text-center text-gray-700 text-xl font-semibold capitalize">{emoji.name}</h2>
+                            <button className="col-span-4 sm:col-span-1 hover:bg-gradient-to-r p-3 rounded-md duration-300  " key={emoji.id} onClick={()=>moodTracker(emoji.name,emoji.emoji)}>
+                                <img src={emoji.emoji} alt={emoji.name} className="w-32 h-32 rounded-full" />
+                                <h2 className="text-center text-gray-500 text-xl font-bold capitalize ">{emoji.name}</h2>
                             </button>
                         ))}
                     </div>
                 </> :
-                <ConfirmationMood mood={mood} />
+                <ConfirmationMood mood={mood} emoji={emoji} />
             }
         </div>
     )
